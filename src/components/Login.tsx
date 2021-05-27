@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useReducer, useEffect } from 'react'
 
 interface AuthState {
     isValidating:boolean;
@@ -8,7 +8,7 @@ interface AuthState {
 };
 
 const initialState: AuthState = {
-    isValidating: false,
+    isValidating: true,
     token: null,
     userName: '',
     nombre: ''
@@ -32,14 +32,27 @@ const authReducer = (state: AuthState, action: AuthAction ):AuthState  => {
 
 export const Login = () => {
 
-    const [state, dispatch] = useReducer(authReducer, initialState)
+    const [{ isValidating }, dispatch] = useReducer(authReducer, initialState);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            dispatch({ type: 'LOGOUT' })
+        }, 1500);
+        return () => {
+            clearTimeout(timeout);
+        }
+    }, []);
+
+    if ( isValidating) {
+        return(
+            <div className="alert alert-info">Validating...</div>
+        )
+    };
 
     return (
         <>
             <h3>Login</h3>
-            <div className="alert alert-info">
-                Validating. . .
-            </div>
+            
 
             <div className="alert alert-danger">
                 Not authenticated. . .
