@@ -1,12 +1,14 @@
 import './App.css';
-import Basics from './components/Basics';
+// import Basics from './components/Basics';
+import Literals from './components/literals';
 
 function App() {
   return (
     <div className="mt-2">
       <h1>Naboo</h1>
       <hr />
-      <Basics />
+      {/* <Basics /> */}
+      <Literals />
     </div>
   );
 }
