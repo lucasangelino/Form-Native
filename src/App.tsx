@@ -1,7 +1,8 @@
 import './App.css';
 // import Basics from './components/Basics';
 // import Literals from './components/literals';
-import Functiones from './components/Functiones';
+// import Functiones from './components/Functiones';
+import { Contador } from './components/Contador';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <hr />
       {/* <Basics /> */}
       {/* <Literals /> */}
-      <Functiones />
+      {/* <Functiones /> */}
+      <Contador />
     </div>
   );
 }
