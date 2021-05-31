@@ -1,20 +1,25 @@
-import { useReducer, useEffect } from 'react'
+import { useReducer} from 'react'
 
 interface AuthState {
-    isValidating:boolean;
-    token:string | null;
-    userName:string;
-    nombre:string;
+    isValidating: boolean;
+    token: string | null;
+    userName: string;
+    nombre: string;
 };
 
 const initialState: AuthState = {
-    isValidating: true,
+    isValidating: false,
     token: null,
     userName: '',
     nombre: ''
 };
 
-type AuthAction = { type: 'LOGOUT' };
+type LoginPayload = { userName: string, nombre:string }
+
+type AuthAction = 
+    | { type: 'LOGOUT' }
+    | { type: 'LOGIN', payload: LoginPayload }
+    | { type: 'VALIDATING' };
 
 const authReducer = (state: AuthState, action: AuthAction ):AuthState  => {
     switch (action.type) {
@@ -24,52 +29,69 @@ const authReducer = (state: AuthState, action: AuthAction ):AuthState  => {
                 token: null,
                 nombre: '',
                 userName: ''
+            };
+        case 'LOGIN':
+            const { nombre, userName } = action.payload;
+            return {
+                isValidating: false,
+                token: '2378426y34',
+                nombre,
+                userName
+            };
+        case 'VALIDATING':
+            return {
+                isValidating: true,
+                token: null,
+                nombre: '',
+                userName: ''
             }
+            
         default:
             return state;
-    }
+    };
 };
 
 export const Login = () => {
 
-    const [{ isValidating }, dispatch] = useReducer(authReducer, initialState);
+    const [{ isValidating, token, userName }, dispatch] = useReducer(authReducer, initialState);
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            dispatch({ type: 'LOGOUT' })
+    const login = () => {
+        dispatch( { type: 'VALIDATING' } );
+        const logoutIimeout = setTimeout(() => {
+            dispatch( { type: 'LOGIN' , payload: {nombre: 'Lucas', userName: 'Luc'} } );
         }, 1500);
         return () => {
-            clearTimeout(timeout);
+            clearTimeout(logoutIimeout);
         }
-    }, []);
+    };
 
-    if ( isValidating) {
-        return(
-            <div className="alert alert-info">Validating...</div>
-        )
+    const logout = () => {
+        dispatch( { type: 'LOGOUT' } );
     };
 
     return (
         <>
             <h3>Login</h3>
-            
 
-            <div className="alert alert-danger">
-                Not authenticated. . .
-            </div>
+            {
+                ( token )
+                ? <div className="alert alert-success">Hola <strong>{`${ userName }`}</strong></div>
+                : <div className="alert alert-danger">Not Authenticated. . .</div>
+            }
 
-            <div className="alert alert-success">
-                Authenticated. . .
-            </div>
-
-            <button className="btn btn-primary">
-                Login
-            </button>
-
-            <button className="btn btn-danger">
-                Logout
-
-            </button>
+            {
+                token
+                ? (
+                    <button className="btn btn-danger" onClick={logout}>
+                        Logout
+                    </button>
+                )
+                : (
+                    <button className={`btn btn-primary ${ isValidating ? 'disabled ' : '' }`} type="button" onClick={login}>
+                        { isValidating ? 'Loging in...' : 'Login' }
+                    </button>
+                )
+            }
         </>
-    )
-}
+    );
+};
