@@ -87,7 +87,11 @@ export const Login = () => {
                     </button>
                 )
                 : (
-                    <button className={`btn btn-primary ${ isValidating ? 'disabled ' : '' }`} type="button" onClick={login}>
+                    <button 
+                        className={`btn btn-primary ${ isValidating ? 'disabled ' : '' }`} 
+                        type="button" 
+                        onClick={login}
+                    >
                         { isValidating ? 'Loging in...' : 'Login' }
                     </button>
                 )
