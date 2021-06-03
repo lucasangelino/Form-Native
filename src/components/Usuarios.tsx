@@ -14,7 +14,8 @@ export const Usuarios = () => {
                         alt={user.first_name} 
                         style={{
                             borderRadius: '50%', 
-                            width: '30px'
+                            width: '30px',
+                            height: '30px'
                         }}    
                     />
                 </td>

@@ -5,7 +5,8 @@ import './App.css';
 // import { Contador } from './components/Contador';
 // import { ContadorHook } from './components/ContadorHook';
 // import { Login } from './components/Login';
-import { Usuarios } from './components/Usuarios';
+// import { Usuarios } from './components/Usuarios';
+import { Forms } from './components/Forms';
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
       {/* <Contador /> */}
       {/* <ContadorHook /> */}
       {/* <Login /> */}
-      <Usuarios />
+      {/* <Usuarios /> */}
+      <Forms />
+
       
     </div>
   );
